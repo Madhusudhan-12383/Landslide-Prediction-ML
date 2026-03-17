@@ -1,0 +1,58 @@
+# 🔹 Step 1: Import Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# 🔹 Step 2: Create Sample Dataset (Replace with your real data if you have)
+data = {
+    'rainfall': [200, 150, 300, 400, 250, 100, 350, 280, 320, 180],
+    'slope': [30, 20, 45, 50, 35, 10, 48, 40, 42, 25],
+    'soil_type': [1, 0, 1, 1, 0, 0, 1, 1, 1, 0],  # 1 = weak soil, 0 = strong
+    'vegetation': [0, 1, 0, 0, 1, 1, 0, 0, 0, 1], # 0 = low vegetation
+    'landslide': [1, 0, 1, 1, 0, 0, 1, 1, 1, 0]   # Target (1 = Yes, 0 = No)
+}
+
+df = pd.DataFrame(data)
+
+print("Dataset Preview:")
+print(df.head())
+
+# 🔹 Step 3: Features & Target
+X = df.drop('landslide', axis=1)
+y = df['landslide']
+
+# 🔹 Step 4: Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 🔹 Step 5: Feature Scaling
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# 🔹 Step 6: Train Model (Random Forest)
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# 🔹 Step 7: Predictions
+y_pred = model.predict(X_test)
+
+# 🔹 Step 8: Evaluation
+print("\nAccuracy:", accuracy_score(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+
+# 🔹 Step 9: Confusion Matrix
+cm = confusion_matrix(y_test, y_pred)
+print("\nConfusion Matrix:\n", cm)
+
+# 🔹 Step 10: Test with New Data
+new_data = np.array([[320, 45, 1, 0]])  # Example: rainfall, slope, soil_type, vegetation
+new_data = scaler.transform(new_data)
+
+prediction = model.predict(new_data)
+
+print("\nNew Prediction (1 = Landslide, 0 = No Landslide):", prediction[0])
