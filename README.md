@@ -27,4 +27,4 @@ This project predicts landslide occurrence using machine learning techniques bas
 Predicts whether a landslide will occur (1 = Yes, 0 = No)
 
 ## 🔗 Project Link
-(Add your Colab link here if needed)
+(https://colab.research.google.com/drive/1d8kIuf6rQqOXpkjCrHpCiCmdammYkGi4#scrollTo=ETZRm-rrPdaW&line=38&uniqifier=1)
